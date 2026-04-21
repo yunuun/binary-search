@@ -3,21 +3,26 @@ import bisect
 
 def binary_insertion_sort(arr):
     """
-    二元插入排序
-    使用二分搜尋找到插入位置，減少比較次數
-    時間複雜度: O(n²)（移動次數），O(n log n)（比較次數）
-    空間複雜度: O(1)
+    Binary Insertion Sort
+    Uses binary search to find the insertion position, reducing comparisons.
+    Time complexity: O(n²) for shifting, O(n log n) for comparisons
+    Space complexity: O(1)
     """
     for i in range(1, len(arr)):
         key = arr[i]
+        # Find insertion position using binary search in the sorted portion [0, i)
         pos = bisect.bisect_left(arr, key, 0, i)
+        # Shift elements to the right to make room for insertion
         arr[pos + 1 : i + 1] = arr[pos:i]
         arr[pos] = key
     return arr
 
 
 def binary_search(arr, key, low, high):
-    """手動實作二分搜尋（不使用 bisect 模組）"""
+    """
+    Manual implementation of binary search (without using bisect module).
+    Finds the leftmost position where key can be inserted to maintain sorted order.
+    """
     while low < high:
         mid = (low + high) // 2
         if arr[mid] < key:
@@ -28,7 +33,10 @@ def binary_search(arr, key, low, high):
 
 
 def binary_insertion_sort_manual(arr):
-    """使用手動實作的二分搜尋版本"""
+    """
+    Binary Insertion Sort using manual binary search implementation.
+    Same as binary_insertion_sort, but with self-implemented binary search.
+    """
     for i in range(1, len(arr)):
         key = arr[i]
         pos = binary_search(arr, key, 0, i)
@@ -51,6 +59,6 @@ if __name__ == "__main__":
     for data in test_cases:
         original = data.copy()
         result = binary_insertion_sort(data)
-        print(f"輸入: {original}")
-        print(f"輸出: {result}")
+        print(f"Input: {original}")
+        print(f"Output: {result}")
         print("-" * 40)
